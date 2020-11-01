@@ -1,0 +1,521 @@
+openapi: 3.0.0
+info:
+  title: Readify
+  description: Readify API
+  version: 1.0.0
+servers:
+  - url: /
+
+tags:
+  - name: user
+    description: Everything about user
+  - name: book
+    description: API for Book entitiy
+  - name: library
+    description: API for LibraryBook entitiy
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      properties:
+        _id:
+          type: string
+        email:
+          type: string
+        settings:
+          type: object
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    UserSettings:
+      properties:
+        theme:
+          type: string
+        notifications:
+          type: boolean
+        compactMode:
+          type: boolean
+    UpdateUser:
+      properties:
+        settings:
+          $ref: '#/components/schemas/UserSettings'
+    Book:
+      properties:
+        _id:
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string
+        isbn13:
+          type: string
+        isbn10:
+          type: string
+        categories:
+          type: string
+        thumbnail:
+          type: string
+        description:
+          type: string
+        published_year:
+          type: number
+        average_rating:
+          type: number
+        num_pages:
+          type: number
+        ratings_count:
+          type: number
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    CreateBook:
+      properties:
+        title:
+          type: string
+        subtitle:
+          type: string
+        authors:
+          type: array
+          items:
+            type: string
+        isbn13:
+          type: string
+        isbn10:
+          type: string
+        categories:
+          type: string
+        thumbnail:
+          type: string
+        description:
+          type: string
+        published_year:
+          type: number
+        average_rating:
+          type: number
+        num_pages:
+          type: number
+        ratings_count:
+          type: number
+    LibraryBook:
+      properties:
+        _id:
+          type: string
+        bookTitle:
+          type: string
+        notes:
+          type: string
+        book:
+          $ref: '#/components/schemas/Book'
+        createdBy:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+    CreateLibraryBook:
+      properties:
+        bookTitle:
+          type: string
+        notes:
+          type: string
+        book:
+          type: string
+
+paths:
+  /login:
+    post:
+      summary: User authentication.
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: Token created
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+  /signup:
+    post:
+      summary: User registration.
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User created
+        '400':
+          description: Need email and password
+        '500':
+          description: Server error
+  /api/user:
+    get:
+      summary: Get user profile info.
+      security:
+        - bearerAuth: []
+      tags:
+        - user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+    put:
+      summary: Update user profile.
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Wrong body
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+
+  /api/book:
+    get:
+      summary: Get all books.
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - book
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set, default 0
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return, default 20
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Return all items with the search query in the title
+        - in: query
+          name: sortProperty
+          schema:
+            type: string
+          description: Object property by which sort the results, default 'title'
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: ['asc', 'desc']
+          description: Order direction (ascending, descending) for the specified sortProperty, default order by 'title'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+    post:
+      summary: Add new book.
+      tags:
+        - book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBook'
+      responses:
+        '201':
+          description: Book created
+        '400':
+          description: Wrong body
+        '500':
+          description: Server error
+  /api/book/{id}:
+    get:
+      summary: Get book by id.
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - book
+      parameters:
+        - name: id
+          in: path
+          description: Object ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+    put:
+      summary: Update book by id.
+      tags:
+        - book
+      parameters:
+        - name: id
+          in: path
+          description: Object ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBook'
+      responses:
+        '201':
+          description: Book updated
+        '400':
+          description: Wrong body
+        '500':
+          description: Server error
+    delete:
+      summary: Remove book by id.
+      tags:
+        - book
+      parameters:
+        - name: id
+          in: path
+          description: Object ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book deleted
+        '400':
+          description: Something went wrong
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+
+  /api/library:
+    get:
+      summary: Get all user's library books.
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - library
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set, default 0
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: The numbers of items to return, default 20
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Return all items with the search query in the book title
+        - in: query
+          name: sortProperty
+          schema:
+            type: string
+          description: Object property by which sort the results, default 'bookTitle'
+        - in: query
+          name: order
+          schema:
+            type: string
+            enum: [ 'asc', 'desc' ]
+          description: Order direction (ascending, descending) for the specified sortProperty, default order by 'bookTitle'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LibraryBook'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+    post:
+      summary: Add book to user library.
+      tags:
+        - library
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLibraryBook'
+      responses:
+        '201':
+          description: Library book created
+        '400':
+          description: Wrong body
+        '500':
+          description: Server error
+
+  /api/library/{id}:
+    get:
+      summary: Get library book by id.
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - library
+      parameters:
+        - name: id
+          in: path
+          description: Object ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryBook'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+    put:
+      summary: Update library book by id.
+      tags:
+        - library
+      parameters:
+        - name: id
+          in: path
+          description: Object ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLibraryBook'
+      responses:
+        '201':
+          description: Library book updated
+        '400':
+          description: Wrong body
+        '500':
+          description: Server error
+    delete:
+      summary: Remove library book by id.
+      tags:
+        - library
+      parameters:
+        - name: id
+          in: path
+          description: Object ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Library book deleted
+        '400':
+          description: Something went wrong
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error
+
+  /api/library/book/{bookId}:
+    get:
+      summary: Get library book by original book id.
+      security:
+        - bearerAuth: [ ]
+      tags:
+        - library
+      parameters:
+        - name: bookId
+          in: path
+          description: Object ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LibraryBook'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Server error

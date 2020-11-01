@@ -1,0 +1,71 @@
+{
+  "name": "api-design-v3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ion Chiriac <ion.chiriac@live.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "test": "NODE_ENV=testing jest --forceExit --detectOpenHandles  --silent",
+    "test-routes": "yarn test -t router",
+    "test-models": "yarn test -t model",
+    "test-controllers": "yarn test -t controllers",
+    "test-auth": "yarn test -t Authentication:",
+    "dev": "nodemon --exec yarn restart",
+    "restart": "rimraf dist && yarn build && yarn start",
+    "start": "node dist/index.js",
+    "lintfix": "eslint --fix --ext .js --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "bcrypt": "5.0.0",
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "cuid": "2.1.8",
+    "dotenv": "8.2.0",
+    "express": "4.17.1",
+    "jsonwebtoken": "8.5.1",
+    "lodash": "4.17.20",
+    "mongoose": "5.10.7",
+    "mongoose-paginate-v2": "1.3.9",
+    "morgan": "1.10.0",
+    "swagger-ui-express": "^4.1.4",
+    "validator": "13.1.17",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.11.6",
+    "@babel/core": "7.11.6",
+    "@babel/node": "7.10.5",
+    "@babel/plugin-proposal-class-properties": "7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "7.11.0",
+    "@babel/plugin-proposal-optional-chaining": "7.11.0",
+    "@babel/plugin-syntax-optional-chaining": "7.8.3",
+    "@babel/preset-env": "7.11.5",
+    "babel-eslint": "10.1.0",
+    "babel-jest": "26.3.0",
+    "eslint": "7.9.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-friendly-formatter": "4.0.1",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jest": "24.0.1",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
+    "jest": "26.4.2",
+    "mock-req-res": "1.2.0",
+    "nodemon": "2.0.4",
+    "rimraf": "3.0.2",
+    "supertest": "4.0.2"
+  },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/",
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "<rootDir>/test-db-setup.js",
+    "testPathIgnorePatterns": [
+      "dist/"
+    ],
+    "restoreMocks": true
+  }
+}

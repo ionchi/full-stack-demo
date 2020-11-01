@@ -1,0 +1,137 @@
+@import '_defaults';
+@import '_utilities';
+@import '_mixins';
+@import '_typography';
+
+// Root level variables
+:root {
+  --color-brand-dark-1: #212121;
+  --color-brand-dark-2: #323232;
+  --color-brand-dark-3: #0D7377;
+  --color-brand-dark-4: #14FFEC;
+  --color-dark-grey: #797979;
+  --color-light-grey: #C4C4C4;
+  --color-dark-blue: #0EADEC;
+  --navbar-h: 80px;
+  --font-size-1: 10px;
+  --font-size-2: 12px;
+  --font-size-3: 14px;
+  --font-size-4: 16px;
+  --font-size-5: 18px;
+  --font-size-6: 20px;
+  --font-size-7: 24px;
+  --font-size-8: 28px;
+  --font-size-9: 32px;
+  --font-size-10: 36px;
+  --font-size-11: 40px;
+  --font-size-12: 44px;
+  --font-size-13: 54px;
+  --font-size-14: 68px;
+  --font-size-15: 80px;
+}
+
+.light-grey-btn {
+  border-color: #14FFEC !important;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%);
+  &.v-btn--disabled {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+  }
+  .v-btn__content {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+}
+.gradient-border-filled-btn {
+  border-image-slice: 1 !important;
+  border-image-source: linear-gradient(179.3deg, #32C5FF -43.2%, #50E3C2 100%) !important;
+  background: rgba(255, 255, 255, 0.11) !important;
+  mix-blend-mode: normal;
+  &.v-btn--disabled {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+  }
+  .v-btn__content {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+}
+.outlined-button {
+  border-color: #FFFFFF !important;
+  &.v-btn--disabled {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+  .v-btn__content {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+  }
+}
+.dark-grey-btn {
+  border-image-slice: 1 !important;
+  border-image-source: linear-gradient(179.3deg, #32C5FF -43.2%, #50E3C2 100%) !important;
+  background: linear-gradient(270deg, rgba(29, 29, 29, 0.75) 0%, rgba(0, 0, 0, 0.375) 100%);
+  mix-blend-mode: normal;
+  transition: border 250ms ease-out;
+  .v-btn--disabled {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+  }
+  .v-btn__content {
+    font-size: 12px !important;
+    font-weight: 300 !important;
+    transition: color 250ms ease-out;
+  }
+}
+
+.fade-enter-active {
+  transition: opacity .800s;
+}
+.fade-enter, .fade-leave-to .fade-leave-active {
+  opacity: 0;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition-property: opacity;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
+.page-fade-enter-active,
+.page-fade-leave-active {
+  opacity: 1;
+  transition: opacity .5s;
+}
+.page-fade-enter,
+.page-fade-leave-active {
+  opacity: 0;
+}
+
+.horizontal-gradient-divider {
+  background: linear-gradient(to right, transparent 10%, #333333 50%, transparent 90%);
+  height: 2px;
+  width: 100%;
+}
+
+.menu-down-icon {
+  .v-icon {
+    opacity: 0.7;
+    -webkit-transition: -webkit-transform .3s ease-in-out;
+    -ms-transition: -ms-transform .3s ease-in-out;
+    transition: transform .3s ease-in-out;
+  }
+  &.menu-open .v-icon {
+    transform-origin: center center;
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+  }
+}
+
+.page-title {
+  font-size: 32px;
+  color: var(--color-brand-dark-4);
+}

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  api:
+    container_name: api
+    restart: always
+    build: ./api/
+    environment:
+        - JWT_SECRET=abmGnOiDBk1WFhpnYUJz5jXnSIrPBcSD
+        - DB_URL=mongodb://dev:firstuser@mongodb:27017/readify
+        - PORT=8888
+    ports:
+        - 8888:8888
+    links:
+        - mongodb
+    depends_on:
+        - mongodb
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    volumes:
+      - ./mongodb/data/db/:/data/db/
+      - ./mongodb/data/log/:/var/log/mongodb/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: firstuser
+      MONGO_INITDB_DATABASE: readify
+    ports:
+      - 27017:27017

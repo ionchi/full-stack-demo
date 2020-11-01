@@ -1,0 +1,108 @@
+$body-font-family: 'Roboto';
+
+html, body {
+  font-family: $body-font-family, sans-serif !important;
+  letter-spacing: .5px;
+  margin: 0;
+  color: #FFFFFF;
+  background-color: var(--color-brand-dark-1);
+}
+
+.not-scrollable {
+  overflow-y: hidden !important;
+}
+
+.overflow-auto {
+  overflow-y: auto !important;
+}
+
+.v-application {
+  font-family: $body-font-family, sans-serif !important;
+}
+
+.v-skeleton-loader__list-item.v-skeleton-loader__bone,
+.v-skeleton-loader .v-skeleton-loader__bone {
+  opacity: 0.6 !important;
+  height: 100% !important;
+}
+
+.brand-input-field {
+  .v-text-field__slot label, .v-text-field__slot input {
+    font-size: 14px !important;
+  }
+  .v-text-field__slot input {
+    color: var(--color-brand-dark-4) !important;
+  }
+  .v-input__append-inner .v-icon {
+    font-size: 18px !important;
+  }
+  & > .v-input__control > .v-input__slot:before {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+  .theme--dark.v-label {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.no-border-radius.v-dialog, .no-border-radius .v-sheet {
+  border-radius: 0 !important;
+}
+
+.no-shadow-dialog.v-dialog {
+  box-shadow: none !important;
+  overflow-y: hidden;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* AUTOFILL BROWSER BACKGROUND */
+@-webkit-keyframes autofill {
+  to {
+    color: #FFFFFF;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
+
+:focus, .v-btn:focus {
+  outline: none !important;
+}
+
+/* ::SCROLLBARS */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-corner {
+  display: none;
+}
+::-webkit-scrollbar-track {
+  background: #e5e5e5;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-dark-4);
+}
+
+@media screen and (max-width: 960px) {
+  .v-dialog {
+    border-radius: 0 !important;
+  }
+}
