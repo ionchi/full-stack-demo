@@ -1,8 +1,8 @@
 import {
 	newToken,
 	verifyToken,
-	signup,
-	signin,
+	signUp,
+	signIn,
 	protect
 } from '../auth';
 import mongoose from 'mongoose';
@@ -45,7 +45,7 @@ describe('Authentication:', () => {
 				}
 			};
 
-			await signup(req, res);
+			await signUp(req, res);
 		});
 
 		test('creates user and and sends new token from user', async () => {
@@ -66,7 +66,7 @@ describe('Authentication:', () => {
 				}
 			};
 
-			await signup(req, res);
+			await signUp(req, res);
 		});
 	});
 
@@ -85,7 +85,7 @@ describe('Authentication:', () => {
 				}
 			};
 
-			await signin(req, res);
+			await signIn(req, res);
 		});
 
 		test('user must be real', async () => {
@@ -104,7 +104,7 @@ describe('Authentication:', () => {
 				}
 			};
 
-			await signin(req, res);
+			await signIn(req, res);
 		});
 
 		test('passwords must match', async () => {
@@ -128,7 +128,7 @@ describe('Authentication:', () => {
 				}
 			};
 
-			await signin(req, res);
+			await signIn(req, res);
 		});
 
 		test('creates new token', async () => {
@@ -152,7 +152,7 @@ describe('Authentication:', () => {
 				}
 			};
 
-			await signin(req, res);
+			await signIn(req, res);
 		});
 	});
 
